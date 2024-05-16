@@ -7,10 +7,10 @@ import AnnouncementPage from '../components/AnnouncementPage.vue';
 import CommentPage from '../components/CommentPage.vue';
 
 const routes = [
-  // {
-  //   path: '/',
-  //   redirect: '/home' // 添加重定向规则
-  // },
+  {
+    path: '/',
+    redirect: '/home' // 添加重定向规则
+  },
   {
     path: '/home',
     name: 'home',
