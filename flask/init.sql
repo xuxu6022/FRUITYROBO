@@ -38,7 +38,11 @@ CREATE TABLE IF NOT EXISTS sales (
     sales_date DATETIME
 );
 
-INSERT INTO sales (sales_date, amount) VALUES ('2024-05-07 20:30:00', 2);
+INSERT INTO sales (sales_date, amount) VALUES ('2024-05-07', 2);
+INSERT INTO sales (sales_date, amount) VALUES ('2024-05-08', 2);
+INSERT INTO sales (sales_date, amount) VALUES ('2024-05-09', 2);
+INSERT INTO sales (sales_date, amount) VALUES ('2024-05-10', 2);
+INSERT INTO sales (sales_date, amount) VALUES ('2024-05-11', 2);
 
 CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
