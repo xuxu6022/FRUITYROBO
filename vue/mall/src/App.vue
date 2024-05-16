@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <Mall/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Mall from './components/MallList.vue';
 
 export default {
   name: 'App',
-  components: {
-    Mall
-  }
 };
 </script>
