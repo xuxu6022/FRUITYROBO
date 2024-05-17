@@ -128,6 +128,16 @@
 .product-info {
   margin-top: 10px;
 }
+
+.limited-text {
+  display: inline-block;
+  max-width: 200px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  vertical-align: bottom; 
+}
+
 </style>
 
 <template>
@@ -159,13 +169,15 @@
   <div class="announcement-image">
     <div v-if="announcements_detail.length > 0" class="image-container">
       <img src="../assets/announcement1.png" alt="Image 1" class="image">
-      <div class="text-overlay" @click="goToAnnouncementPage" style="color: whitesmoke;">{{
-    announcements_detail[0].title }}</div>
+      <div class="text-overlay" @click="goToAnnouncementPage" style="color: whitesmoke;" :title="announcements_detail[0].title">
+        <span class="limited-text">{{ announcements_detail[0].title }}</span>
+      </div>
     </div>
     <div v-if="announcements_detail.length > 0" class="image-container">
       <img src="../assets/announcement2.png" alt="Image 1" class="image">
-      <div class="text-overlay" @click="goToAnnouncementPage" style="color: #274C5B;">{{ announcements_detail[1].title
-        }}</div>
+      <div class="text-overlay" @click="goToAnnouncementPage" style="color: #274C5B;" :title="announcements_detail[1].title">
+        <span class="limited-text">{{ announcements_detail[1].title }}</span>
+      </div>
     </div>
   </div>
 
@@ -220,9 +232,10 @@
     <img src="../assets/commentBackground.png" width="100%" height="600px">
     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;">
       <h1 style="color: #274C5B;">What do customers say about us?</h1>
-      <div style="color: #7EB693; font-weight: bold; font-size: 20px; margin: 40px 0;">
-        {{ comments.length > 0 ? comments[0].content : 'No comments available' }}
-      </div>
+      <div style="color: #7EB693; font-weight: bold; font-size: 20px; margin: 40px 0; display: inline-block; max-width: 700px; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; white-space: pre-wrap;">
+  {{ comments.length > 0 ? comments[0].content : 'No comments available' }}
+</div>
+      <br>
       <el-button type="primary" @click="goToCommentPage"
         style="font-weight: bold; background-color: #EFD372; color: #274C5B; border-color: #EFD372;">MORE</el-button>
     </div>

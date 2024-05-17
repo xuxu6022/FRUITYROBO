@@ -73,7 +73,8 @@
   <div v-for="announcement in announcements" :key="announcement.id" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
     <div style="margin: 10px 40px;">
       <div style="font-weight: bold; color: #274C5B; font-size: 24px;">{{ announcement.title }}</div>
-      <div style="font-weight: bold; color: #7EB693; font-size: 16px;">{{ announcement.publish_date }}</div>
+      <div style="font-weight: bold; color: #EFD372; font-size: 16px;">{{ announcement.publish_date }}</div>
+      <div style="font-weight: bold; color: #7EB693; font-size: 16px;display: inline-block; max-width: 1400px; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; white-space: pre-wrap;">{{ announcement.content }}</div>
     </div>
     </div></div>
 </template>

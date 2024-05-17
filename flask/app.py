@@ -6,7 +6,7 @@ from flask import abort
 app = Flask(__name__)
 CORS(app)
 
-db_file = 'student.db'
+db_file = 'fruit_data.db'
 
 # 连接到 SQLite 数据库
 def get_db_connection():

@@ -2,7 +2,7 @@ import os
 import sqlite3
 import base64
 
-db_file = 'student.db'
+db_file = 'fruit_data.db'
 
 # 如果数据库文件不存在，则创建数据库文件并初始化数据
 if not os.path.exists(db_file):
@@ -28,7 +28,7 @@ if not os.path.exists(db_file):
         for column in columns:
             print(column[1])  # column[1] 包含列名
         # cursor.execute("INSERT INTO products (name, image) VALUES ('mango', ?)", (encoded_string,))
-        cursor.execute("INSERT INTO products (name, description, price, image) VALUES ('mango', 'delicious', 2, ?)", (encoded_string,))
+        cursor.execute("INSERT INTO products (name, description, price, image) VALUES ('Mango', 'delicious', 2, ?)", (encoded_string,))
         cursor.execute("SELECT * FROM products")
         rows = cursor.fetchall()
         for row in rows:
