@@ -146,7 +146,7 @@ def get_announcements():
         conn = get_db_connection()
         print("连接上啦！")
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM announcements ORDER BY id DESC LIMIT 2')
+        cursor.execute('SELECT * FROM announcements ORDER BY id DESC')
         announcements = cursor.fetchall()
         conn.close()
         if not announcements:

@@ -60,13 +60,13 @@
       SALE
     </p>
   </div>
+</div>
   <div style="position: relative;">
         <el-table :data="sales" stripe style="width: 100%; color: #274C5B; font-weight: bold;">
           <el-table-column prop="sales_date" label="Date"></el-table-column>
           <el-table-column prop="amount" label="Amount"></el-table-column>
         </el-table>
       </div>
-</div>
 </template>
 
 

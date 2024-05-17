@@ -45,7 +45,7 @@
   font-weight: bold;
 }
 
-.button {
+.buttons-edit {
   margin-top: 24px;
   font-weight: bold;
   color: #274C5B;
@@ -56,27 +56,77 @@
 
 .announcement-image {
   display: flex;
-  justify-content: space-around; 
-  align-items: center; 
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .image-container {
   position: relative;
-  margin: 0 10px; /* 图片之间的间距 */
+  margin: 0 100px;
+  /* 图片之间的间距 */
 }
 
 .image {
-  max-width: 500px; 
-  height: auto; 
+  max-width: 500px;
+  height: auto;
 }
 
 .text-overlay {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 40%;
   transform: translate(-90%, -50%);
   font-size: 24px;
-  font-weight: bold; 
+  font-weight: bold;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  /* 将背景图像放置在底层 */
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  z-index: 1;
+  /* 将产品列表放置在上层 */
+}
+
+.product {
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+}
+
+.product-info {
+  margin-top: 10px;
 }
 </style>
 
@@ -107,23 +157,74 @@
     </div>
   </div>
   <div class="announcement-image">
-    <div class="image-container">
+    <div v-if="announcements_detail.length > 0" class="image-container">
       <img src="../assets/announcement1.png" alt="Image 1" class="image">
-      <div class="text-overlay">announcement</div>
+      <div class="text-overlay" @click="goToAnnouncementPage" style="color: whitesmoke;">{{
+    announcements_detail[0].title }}</div>
     </div>
-    <div class="image-container">
-      <img src="../assets/announcement2.png" alt="Image 2" class="image">
-      <div class="text-overlay">announcement</div>
+    <div v-if="announcements_detail.length > 0" class="image-container">
+      <img src="../assets/announcement2.png" alt="Image 1" class="image">
+      <div class="text-overlay" @click="goToAnnouncementPage" style="color: #274C5B;">{{ announcements_detail[1].title
+        }}</div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 10px; display: flex; flex-direction: column; align-items: center;">
+    <img src="../assets/Background.png" alt="Background" class="background-image" />
+    <h1 style="color: whitesmoke; font-weight: bold; margin-top: 10px;padding-bottom: 20px;">Product</h1>
+    <div class="product-list" style="width: 100%;">
+      <div v-for="product in products" :key="product.id" class="product"
+        style="background-color: #DEDDDD; border-radius: 10px; margin: 30px;">
+        <img :src="'data:image/jpeg;base64,' + product.image" alt="Product Image" class="product-image" />
+        <div class="product-info">
+          <h2 style="font-weight: bold; color: #274C5B;">{{ product.name }}</h2>
+          <p style="font-weight: bold; color: #7EB693;">{{ formatCurrency(product.price) }}</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 10px; padding-top: 40px;">
+      <el-button type="primary" @click="goToProductPage"
+        style="font-weight: bold; background-color: #EFD372; color: #274C5B; border-color: #EFD372;">MORE</el-button>
     </div>
   </div>
 
   <div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1 style="color: #274C5B;">Procurement List</h1>
+      <div style="position: relative; text-align: right;">
+        <el-button type="primary" @click="goToPurchasePage"
+          style="font-weight: bold; background-color: #EFD372; color: #274C5B; border-color: #EFD372; margin-top: 24px;">MORE</el-button>
+      </div>
+    </div>
+    <div style="position: relative;">
+      <el-table :data="purchases" stripe style="width: 100%; color: #274C5B; font-weight: bold;">
+        <el-table-column prop="purchase_date" label="Date"></el-table-column>
+        <el-table-column prop="name" label="Name"></el-table-column>
+        <el-table-column prop="amount" label="Amount"></el-table-column>
+      </el-table>
+    </div>
+  </div>
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1 style="color: #274C5B;">Sales</h1>
+      <el-button type="primary" @click="goToSalePage" class="buttons-edit">MORE</el-button>
+    </div>
     <div style="position: relative;">
       <el-table :data="sales" stripe style="width: 100%; color: #274C5B; font-weight: bold;">
         <el-table-column prop="sales_date" label="Date"></el-table-column>
         <el-table-column prop="amount" label="Amount"></el-table-column>
       </el-table>
-      <el-button class="button" type="primary" @click="goToSalePage">MORE</el-button>
+    </div>
+  </div>
+  <div style="position: relative; text-align: center;">
+    <img src="../assets/commentBackground.png" width="100%" height="600px">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;">
+      <h1 style="color: #274C5B;">What do customers say about us?</h1>
+      <div style="color: #7EB693; font-weight: bold; font-size: 20px; margin: 40px 0;">
+        {{ comments.length > 0 ? comments[0].content : 'No comments available' }}
+      </div>
+      <el-button type="primary" @click="goToCommentPage"
+        style="font-weight: bold; background-color: #EFD372; color: #274C5B; border-color: #EFD372;">MORE</el-button>
     </div>
   </div>
 
@@ -153,6 +254,7 @@ export default {
   data() {
     return {
       sales: [],
+      purchases: [],
       comments: [],
       announcements_detail: [],
       products: [],
@@ -163,6 +265,7 @@ export default {
   },
   created() {
     this.fetchSales();
+    this.fetchPurchases();
     this.fetchComments();
     this.detailAnnouncements();
     this.fetchProducts();
@@ -179,6 +282,27 @@ export default {
     },
     goToSalePage() {
       this.$router.push({ name: 'sale' });
+    },
+    goToPurchasePage() {
+      this.$router.push({ name: 'purchase' });
+    },
+    goToAnnouncementPage() {
+      this.$router.push({ name: 'announcement' });
+    },
+    goToCommentPage() {
+      this.$router.push({ name: 'comment' });
+    },
+    goToProductPage() {
+      this.$router.push({ name: 'product' });
+    },
+    fetchPurchases() {
+      axios.get('http://localhost:5000/purchases')
+        .then(response => {
+          this.purchases = response.data.slice(0, 5);
+        })
+        .catch(error => {
+          console.error('Error fetching purchases:', error);
+        });
     },
     fetchComments() {
       axios.get('http://127.0.0.1:5000/comments')
@@ -203,7 +327,7 @@ export default {
     detailAnnouncements() {
       axios.get('http://localhost:5000/announcements/detail')
         .then(response => {
-          this.announcements_detail = response.data;
+          this.announcements_detail = response.data.slice(0,2);
         })
         .catch(error => {
           console.error('Error fetching announcements:', error);
@@ -212,67 +336,14 @@ export default {
     fetchProducts() {
       axios.get('http://127.0.0.1:5000/products/select')
         .then(response => {
-          this.products = response.data;
+          this.products = response.data.slice(0, 4);
         })
         .catch(error => {
           console.error('Error fetching products:', error);
         });
     },
-    deleteProducts(productId) {
-      axios.post('http://127.0.0.1:5000/products/delete', { id: productId })
-        .then(() => {
-          this.products = this.products.filter(product => product.id !== productId);
-          console.log('Product deleted successfully.');
-        })
-        .catch(error => {
-          console.error('Error deleting product:', error);
-        });
-    },
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.Image = e.target.result; // 将图片转为Base64编码并存储在Image中
-      };
-
-      reader.readAsDataURL(file); // 读取文件并触发onload事件
-    },
-    addProduct() {
-      const { Name, Description, Price, Image } = this;
-      this.addProducts(Name, Description, Price, Image);
-    },
-
-    addProducts(name, description, price, image) {
-      axios.post('http://127.0.0.1:5000/products/add', { name, description, price, image })
-        .then(() => {
-          const newProduct = { name, description, price, image };
-          this.products.push(newProduct);
-          this.fetchProducts();
-          console.log('Product added successfully.');
-        })
-        .catch(error => {
-          console.error('Error adding product:', error);
-        });
-    },
-    editProduct(product) {
-      product.editing = true; // 设置产品为可编辑状态
-    },
-
-    saveChanges(product) {
-      const { id, name, description, price, image } = product;
-      axios.put(`http://127.0.0.1:5000/products/update/${id}`, { name, description, price, image })
-        .then(() => {
-          product.editing = false; // 将产品设为不可编辑状态
-          console.log('Product updated successfully.');
-        })
-        .catch(error => {
-          console.error('Error updating product:', error);
-        });
-    },
-
-    cancelChanges(product) {
-      product.editing = false; // 取消编辑状态
+    formatCurrency(value) {
+      return `$${value.toFixed(2)}`;
     }
   }
 };</script>

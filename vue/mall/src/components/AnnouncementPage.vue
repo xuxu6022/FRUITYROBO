@@ -5,13 +5,20 @@
   padding-left: 24px;
   padding-right: 24px;
   color: #274C5B;
-  position: fixed; /* 设置菜单固定定位 */
-  top: 0; /* 距离页面顶部的距离为 0 */
-  left: 0; /* 距离页面左侧的距离为 0 */
-  width: 100%; /* 宽度占满整个页面 */
-  z-index: 1000; /* 确保菜单在其他内容之上 */
-  background-color: rgba(255, 255, 255, 0.9); /* 背景颜色 */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  position: fixed;
+  /* 设置菜单固定定位 */
+  top: 0;
+  /* 距离页面顶部的距离为 0 */
+  left: 0;
+  /* 距离页面左侧的距离为 0 */
+  width: 100%;
+  /* 宽度占满整个页面 */
+  z-index: 1000;
+  /* 确保菜单在其他内容之上 */
+  background-color: rgba(255, 255, 255, 0.9);
+  /* 背景颜色 */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  /* 添加阴影效果 */
 }
 
 .logo-title {
@@ -55,12 +62,20 @@
   </el-menu>
   <div style="position: relative; width: 100%;margin-top: 64px;">
     <img src="../assets/announcementBanner.png" width="100%">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; text-align: center;">
-    <p style="font-size: 56px; color: #274C5B; font-weight: bold; margin: 0; text-align: center;">
-      ANNOUNCEMENT
-    </p>
+    <div
+      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; text-align: center;">
+      <p style="font-size: 56px; color: #274C5B; font-weight: bold; margin: 0; text-align: center;">
+        ANNOUNCEMENT
+      </p>
+    </div>
   </div>
-  </div>
+  <div style="display: flex; flex-direction: column;">
+  <div v-for="announcement in announcements" :key="announcement.id" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <div style="margin: 10px 40px;">
+      <div style="font-weight: bold; color: #274C5B; font-size: 24px;">{{ announcement.title }}</div>
+      <div style="font-weight: bold; color: #7EB693; font-size: 16px;">{{ announcement.publish_date }}</div>
+    </div>
+    </div></div>
 </template>
 
 <script setup>
@@ -75,3 +90,26 @@ const handleSelect = (index) => {
   router.push({ name: index })
 }
 </script>
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      announcements: [],
+    };
+  },
+  created() {
+    this.fetchAnnouncements();
+  },
+  methods: {
+    fetchAnnouncements() {
+      axios.get('http://127.0.0.1:5000/announcements/detail')
+        .then(response => {
+          this.announcements = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching comments:', error);
+        });
+      }
+  }
+};</script>
